@@ -39,12 +39,12 @@ make ctrlq-diag CTRLQ_HEADER_DIR=/path/to/device/register/headers
 
 That directory must contain `shizi_ctrlq_pf.h` and `shizi_ctrlq_fw.h`. This target only compiles `adminq_ctrlq_diag.c` into an object; it does not link a hardware executable or perform register reads.
 
-The exported helper entry points are:
+The public declarations are in `adminq_ctrlq_diag.h`. The helper entry points are:
 
 - `adminq_ctrlq_dump_pf_queues(read32, ctx, out)`: reads PF ATQ/ARQ PARA0, HEAD, and TAIL registers for queue indices 0–7 and prints the raw values plus the fields named in the header.
 - `adminq_ctrlq_dump_fw_status(read32, ctx, out)`: reads FW init/status and ATQ/ARQ parameter/status registers and prints the raw values.
 
-The callback signature is declared in `adminq_ctrlq_diag.c`. When integrating it, move that declaration into a small public header if the SDK needs to call these functions from another compilation unit.
+The caller must implement `read32` and explicitly map the PF/FW windows to the correct device resource. This helper is intentionally not a complete hardware test until that integration is done.
 
 ## What the supplied register headers establish
 
