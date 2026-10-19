@@ -8,21 +8,10 @@
  * Build with CTRLQ_HEADER_DIR pointing to the directory containing the
  * device-provided shizi_ctrlq_pf.h and shizi_ctrlq_fw.h headers.
  */
-#include <stdint.h>
-#include <stdio.h>
+#include "adminq_ctrlq_diag.h"
 
 #include "shizi_ctrlq_pf.h"
 #include "shizi_ctrlq_fw.h"
-
-typedef enum adminq_ctrlq_window_e {
-    ADMINQ_CTRLQ_PF_WINDOW = 0,
-    ADMINQ_CTRLQ_FW_WINDOW = 1
-} adminq_ctrlq_window_t;
-
-typedef int (*adminq_ctrlq_read32_fn)(void *ctx,
-                                      adminq_ctrlq_window_t window,
-                                      uint32_t offset,
-                                      uint32_t *value);
 
 static int ctrlq_read(adminq_ctrlq_read32_fn read32, void *ctx,
                       adminq_ctrlq_window_t window, uint32_t offset,
